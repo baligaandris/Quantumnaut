@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class TileBuilder : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class TileBuilder : MonoBehaviour
     public GameObject[,] downTiles;
     public GameObject[,] leftTiles;
     public GameObject[,] rightTiles;
+
+    public TextAsset[] levelAssetArray;
 
     public float desiredTiles = 7;
     public float desiredScale = 10;
@@ -38,6 +41,5 @@ public class TileBuilder : MonoBehaviour
 
     public void LoadLevel(int levelNumber)
     {
-
     }
 }
