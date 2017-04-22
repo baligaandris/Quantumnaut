@@ -52,19 +52,19 @@ public class Tile : MonoBehaviour
             {
                 case Directions.Up:
                     //gameObject.GetComponent<SpriteRenderer>().color = Color.green;
-                    this.TileState = DataHandler.statesOfLevel[Directions.Up][(int)positionInLevel.x, (int)positionInLevel.y];
+                    this.TileState = DataHandler.statesOfLevel[Directions.Up][(int)positionInLevel.x, 6-(int)positionInLevel.y];
                     break;
                 case Directions.Down:
                     //gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-                    this.TileState = DataHandler.statesOfLevel[Directions.Down][(int)positionInLevel.x, (int)positionInLevel.y];
+                    this.TileState = DataHandler.statesOfLevel[Directions.Down][(int)positionInLevel.x, 6-(int)positionInLevel.y];
                     break;
                 case Directions.Left:
                     //gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-                    this.TileState = DataHandler.statesOfLevel[Directions.Left][(int)positionInLevel.x, (int)positionInLevel.y];
+                    this.TileState = DataHandler.statesOfLevel[Directions.Left][(int)positionInLevel.x, 6-(int)positionInLevel.y];
                     break;
                 case Directions.Right:
                     //gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
-                    this.TileState = DataHandler.statesOfLevel[Directions.Right][(int)positionInLevel.x, (int)positionInLevel.y];
+                    this.TileState = DataHandler.statesOfLevel[Directions.Right][(int)positionInLevel.x, 6-(int)positionInLevel.y];
                     break;
                 default:
                     break;
