@@ -18,6 +18,7 @@ public class TileBuilder : MonoBehaviour
 
     public void Start()
     {
+        DataHandler.statesOfLevel = currentLevelStates;
         DataHandler.numberOfTilesInLevel = (int)desiredTiles;
         tilesInLevel = new GameObject[(int)desiredTiles, (int)desiredTiles];
 
@@ -34,10 +35,12 @@ public class TileBuilder : MonoBehaviour
                 DataHandler.tilesInLevel[i, j] = tilesInLevel[i, j];
             }
         }
+
+        LoadLevel(0);
     }
 
     public void LoadLevel(int levelNumber)
     {
-        LevelLoader.LoadLevel(levelAssetArray[levelNumber]);
+        currentLevelStates = LevelLoader.LoadLevel(levelAssetArray[levelNumber]);
     }
 }

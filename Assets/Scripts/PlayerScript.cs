@@ -106,7 +106,7 @@ public class PlayerScript : MonoBehaviour
     {
         if(x >= 0 && y >= 0 && x <= DataHandler.numberOfTilesInLevel - 1 && y <= DataHandler.numberOfTilesInLevel - 1)
         {
-            if(DataHandler.tilesInLevel[x, y].GetComponent<Tile>().walkable)
+            if(DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Walkable)
             {
                 CurrentTile = DataHandler.tilesInLevel[x, y].GetComponent<Tile>();
             }

@@ -7,6 +7,11 @@ public static class LevelLoader
     public static Dictionary<Directions, TileState[,]> LoadLevel(TextAsset levelFile)
     {
         Dictionary<Directions, TileState[,]> levelDictionary = new Dictionary<Directions, TileState[,]>();
+        levelDictionary.Add(Directions.Up, new TileState[7, 7]);
+        levelDictionary.Add(Directions.Down, new TileState[7, 7]);
+        levelDictionary.Add(Directions.Left, new TileState[7, 7]);
+        levelDictionary.Add(Directions.Right, new TileState[7, 7]);
+
 
         string textForLevel = levelFile.text;
 
