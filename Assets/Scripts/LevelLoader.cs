@@ -37,7 +37,7 @@ public static class LevelLoader
                         }
                         levelDictionary[Directions.Up][q, (j % 8)/*(int)Mathf.Floor(j / 8)*/] = Tile.Convert(int.Parse(tilesInLine[q]));
 
-                        Debug.Log((j % 8) + " : " + q);
+                        Debug.Log(7-(j % 8) + " : " + q);
                     }
                     //Down
                     else if(i == 1)
@@ -48,7 +48,7 @@ public static class LevelLoader
                         }
                         levelDictionary[Directions.Down][q, (j % 8)] = Tile.Convert(int.Parse(tilesInLine[q]));
 
-                        Debug.Log((j % 8) + " : " + q);
+                        Debug.Log(7 - (j % 8) + " : " + q);
                     }
                     //Left
                     else if(i == 2)
@@ -59,7 +59,7 @@ public static class LevelLoader
                         }
                         levelDictionary[Directions.Left][q, (j % 8)] = Tile.Convert(int.Parse(tilesInLine[q]));
 
-                        Debug.Log((j % 8) + " : " + q);
+                        Debug.Log(7 - (j % 8) + " : " + q);
                     }
                     //Right
                     else if(i == 3)
@@ -70,7 +70,7 @@ public static class LevelLoader
                         }
                         levelDictionary[Directions.Right][q, (j % 8)] = Tile.Convert(int.Parse(tilesInLine[q]));
 
-                        Debug.Log((j % 8) + " : " + q);
+                        Debug.Log(7 - (j % 8) + " : " + q);
                     }
                 }
             }
