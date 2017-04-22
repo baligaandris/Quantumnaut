@@ -9,10 +9,7 @@ public class TileBuilder : MonoBehaviour
 
     public GameObject[,] tilesInLevel;
 
-    public GameObject[,] upTiles;
-    public GameObject[,] downTiles;
-    public GameObject[,] leftTiles;
-    public GameObject[,] rightTiles;
+    public Dictionary<Directions, TileState[,]> currentLevelStates = new Dictionary<Directions, TileState[,]>();
 
     public TextAsset[] levelAssetArray;
 
@@ -41,5 +38,6 @@ public class TileBuilder : MonoBehaviour
 
     public void LoadLevel(int levelNumber)
     {
+        LevelLoader.LoadLevel(levelAssetArray[levelNumber]);
     }
 }

@@ -56,4 +56,24 @@ public class Tile : MonoBehaviour
     {
         CurrentDirectionState = newDirection;
     }
+
+    public static TileState Convert(int identifier)
+    {
+        switch (identifier)
+        {
+            case 0:
+                return TileState.Wall;
+            case 1:
+                return TileState.Walkable;
+            case 2:
+                return TileState.Bridge;
+            default:
+                return TileState.Wall;
+        }
+    }
+}
+
+public enum TileState
+{
+    Wall, Walkable, Bridge
 }
