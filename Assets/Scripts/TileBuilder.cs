@@ -36,11 +36,12 @@ public class TileBuilder : MonoBehaviour
             }
         }
 
-        LoadLevel(0);
+        LoadLevel(2);
     }
 
     public void LoadLevel(int levelNumber)
     {
         currentLevelStates = LevelLoader.LoadLevel(levelAssetArray[levelNumber]);
+        DataHandler.statesOfLevel = currentLevelStates;
     }
 }
