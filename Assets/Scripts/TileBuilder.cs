@@ -63,18 +63,18 @@ public class TileBuilder : MonoBehaviour
     public void CalculateVision(PlayerScript viewer, Directions direction)
     {
         Debug.Log("Calculating");
-        foreach(GameObject tileObject in DataHandler.tilesInLevel)
+        foreach (GameObject tileObject in DataHandler.tilesInLevel)
         {
             tileObject.GetComponent<Tile>().Visible = false;
         }
-        if(direction == Directions.Up)
+        if (direction == Directions.Up)
         {
             for (int y = (int)viewer.positionInLevel.y; y < DataHandler.tilesInLevel.GetLength(1); y++)
             {
-                for (int x = (int)viewer.positionInLevel.x-(Mathf.Abs(y) - (int)viewer.positionInLevel.y); x < (int)viewer.positionInLevel.x + (Mathf.Abs(y) - (int)viewer.positionInLevel.y) + 1; x++)
+                for (int x = (int)viewer.positionInLevel.x - (Mathf.Abs(y) - (int)viewer.positionInLevel.y); x < (int)viewer.positionInLevel.x + (Mathf.Abs(y) - (int)viewer.positionInLevel.y) + 1; x++)
                 {
-                    if(y >= 0 && y< DataHandler.tilesInLevel.GetLength(0) && x >= 0 && x < DataHandler.tilesInLevel.GetLength(1))
-                    DataHandler.tilesInLevel[y, x].GetComponent<Tile>().Visible = true;
+                    if (y >= 0 && y < DataHandler.tilesInLevel.GetLength(0) && x >= 0 && x < DataHandler.tilesInLevel.GetLength(1))
+                        DataHandler.tilesInLevel[y, x].GetComponent<Tile>().Visible = true;
                 }
             }
         }
