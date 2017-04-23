@@ -10,10 +10,12 @@ public enum Directions
 public class PlayerScript : MonoBehaviour
 {
     public delegate void ChangeDirectionCallback(Directions direction);
+    public delegate void ChangeDirectionPublicCallback(PlayerScript player, Directions direction);
 
     #region Fields
 
     public ChangeDirectionCallback onChangedDirections;
+    public ChangeDirectionPublicCallback onChangedDirectionsExposed;
 
     public Vector2 positionInLevel;
 
@@ -21,7 +23,7 @@ public class PlayerScript : MonoBehaviour
 
     private Tile previousTile;
 
-    private Directions currentDirection;
+    private Directions currentDirection = Directions.Up;
 
     #endregion
 
@@ -42,6 +44,8 @@ public class PlayerScript : MonoBehaviour
             positionInLevel = currentTile.positionInLevel;
 
             gameObject.transform.position = currentTile.gameObject.transform.position;
+
+            onChangedDirectionsExposed(this, currentDirection);
         }
     }
 
@@ -65,6 +69,9 @@ public class PlayerScript : MonoBehaviour
         }
         set
         {
+            currentDirection = value;
+
+            onChangedDirectionsExposed(this, value);
             onChangedDirections(value);
         }
     }
@@ -73,11 +80,11 @@ public class PlayerScript : MonoBehaviour
 
     public void Start()
     {
-        CurrentTile = DataHandler.tilesInLevel[0, (int)Mathf.Ceil(DataHandler.numberOfTilesInLevel / 2)].GetComponent<Tile>();
+        StartCoroutine(SetCurrentTile());
 
         DataHandler.player = this;
 
-        StartCoroutine(SetInitialDirection(Directions.Up));
+        //StartCoroutine(SetInitialDirection(Directions.Up));
     }
 
     public void Update()
@@ -142,9 +149,9 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    private IEnumerator SetInitialDirection(Directions directionToSetTo)
+    private IEnumerator SetCurrentTile()
     {
         yield return new WaitForEndOfFrame();
-        CurrentDirection = Directions.Up;
+        CurrentTile = DataHandler.tilesInLevel[0, (int)Mathf.Ceil(DataHandler.numberOfTilesInLevel / 2)].GetComponent<Tile>();
     }
 }

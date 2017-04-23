@@ -6,6 +6,40 @@ public class Tile : MonoBehaviour
 {
     //public bool walkable = true;
 
+    private bool visible = false;
+
+    public bool Visible
+    {
+        get
+        {
+            return visible;
+        }
+        set
+        {
+            visible = value;
+
+            if (visible)
+            {
+                if (TileState == TileState.Bridge)
+                {
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                }
+                else if (TileState == TileState.Wall)
+                {
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                }
+                else if (TileState == TileState.Walkable)
+                {
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+                }
+            }
+            else
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+            }
+        }
+    }
+
     public Vector2 positionInLevel;
     private TileState tileState;
 
@@ -19,19 +53,26 @@ public class Tile : MonoBehaviour
         set
         {
             tileState = value;
-
-            if(value == TileState.Bridge)
+            if (visible)
             {
-                gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                if (value == TileState.Bridge)
+                {
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                }
+                else if (value == TileState.Wall)
+                {
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                }
+                else if (value == TileState.Walkable)
+                {
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+                }
             }
-            else if (value == TileState.Wall)
+            else
             {
-                gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                gameObject.GetComponent<SpriteRenderer>().color = Color.black;
             }
-            else if (value == TileState.Walkable)
-            {
-                gameObject.GetComponent<SpriteRenderer>().color = Color.green;
-            }
+            
 
         }
     }
@@ -93,7 +134,13 @@ public class Tile : MonoBehaviour
     {
         if(this.TileState == TileState.Walkable)
         {
-            if(DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Walkable || DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Bridge)
+            if(DataHandler.player.PreviousTile!= null)
+            {
+               // Debug.Log(DataHandler.player.PreviousTile.positionInLevel.x + "-" + x + "=" + (DataHandler.player.PreviousTile.positionInLevel.x - x));
+                //Debug.Log(DataHandler.player.PreviousTile.positionInLevel.y + "-" + y + "=" + (DataHandler.player.PreviousTile.positionInLevel.y - y));
+            }
+            
+            if (DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Walkable || DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Bridge)
             {
                 DataHandler.player.CurrentTile = DataHandler.tilesInLevel[x, y].GetComponent<Tile>();
             }
@@ -102,7 +149,10 @@ public class Tile : MonoBehaviour
         {
             if (DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Walkable || DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Bridge)
             {
-                if (DataHandler.player.PreviousTile.positionInLevel.x - x == 0 || DataHandler.player.PreviousTile.positionInLevel.y - y == 0)
+                //Debug.Log(DataHandler.player.PreviousTile.positionInLevel.x + "-" + x + "=" + (DataHandler.player.PreviousTile.positionInLevel.x - x));
+                //Debug.Log(DataHandler.player.PreviousTile.positionInLevel.y + "-" + y + "=" + (DataHandler.player.PreviousTile.positionInLevel.y - y));
+                //Debug.Log(DataHandler.player.PreviousTile.positionInLevel.y - y);
+                if (DataHandler.player.PreviousTile.positionInLevel.x - y == 0 || DataHandler.player.PreviousTile.positionInLevel.y - x == 0)
                 {
                     DataHandler.player.CurrentTile = DataHandler.tilesInLevel[x, y].GetComponent<Tile>();
                 }

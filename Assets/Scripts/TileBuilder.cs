@@ -18,6 +18,15 @@ public class TileBuilder : MonoBehaviour
 
     public void Start()
     {
+        if(DataHandler.player != null)
+        {
+            DataHandler.player.onChangedDirectionsExposed += CalculateVision;
+        }
+        else
+        {
+            StartCoroutine(SubscribeFOV());
+        }
+        
         DataHandler.statesOfLevel = currentLevelStates;
         DataHandler.numberOfTilesInLevel = (int)desiredTiles;
         tilesInLevel = new GameObject[(int)desiredTiles, (int)desiredTiles];
@@ -36,12 +45,73 @@ public class TileBuilder : MonoBehaviour
             }
         }
 
-        LoadLevel(2);
+        LoadLevel(0);
     }
 
     public void LoadLevel(int levelNumber)
     {
         currentLevelStates = LevelLoader.LoadLevel(levelAssetArray[levelNumber]);
         DataHandler.statesOfLevel = currentLevelStates;
+    }
+
+    public void CalculateVision(PlayerScript viewer, Directions direction)
+    {
+        Debug.Log("Calculating");
+        foreach(GameObject tileObject in DataHandler.tilesInLevel)
+        {
+            tileObject.GetComponent<Tile>().Visible = false;
+        }
+        if(direction == Directions.Up)
+        {
+            for (int y = (int)viewer.positionInLevel.y; y < DataHandler.tilesInLevel.GetLength(1); y++)
+            {
+                for (int x = (int)viewer.positionInLevel.x-(Mathf.Abs(y) - (int)viewer.positionInLevel.y); x < (int)viewer.positionInLevel.x + (Mathf.Abs(y) - (int)viewer.positionInLevel.y) + 1; x++)
+                {
+                    if(y >= 0 && y< DataHandler.tilesInLevel.GetLength(0) && x >= 0 && x < DataHandler.tilesInLevel.GetLength(1))
+                    DataHandler.tilesInLevel[y, x].GetComponent<Tile>().Visible = true;
+                }
+            }
+        }
+        if (direction == Directions.Down)
+        {
+            for (int y = (int)viewer.positionInLevel.y; y >= 0; y--)
+            {
+                for (int x = (int)viewer.positionInLevel.x - (Mathf.Abs(y - (int)viewer.positionInLevel.y)); x < (int)viewer.positionInLevel.x + (Mathf.Abs(y - (int)viewer.positionInLevel.y) + 1); x++)
+                {
+                    if (y >= 0 && y < DataHandler.tilesInLevel.GetLength(0) && x >= 0 && x < DataHandler.tilesInLevel.GetLength(1))
+                        DataHandler.tilesInLevel[y, x].GetComponent<Tile>().Visible = true;
+                }
+            }
+        }
+
+        if (direction == Directions.Right)
+        {
+            for (int x = (int)viewer.positionInLevel.x; x < DataHandler.tilesInLevel.GetLength(0); x++)
+            {
+                for (int y = (int)viewer.positionInLevel.y - (Mathf.Abs(x) - (int)viewer.positionInLevel.x); y < (int)viewer.positionInLevel.y + (Mathf.Abs(x) - (int)viewer.positionInLevel.x) + 1; y++)
+                {
+                    if (y >= 0 && y < DataHandler.tilesInLevel.GetLength(0) && x >= 0 && x < DataHandler.tilesInLevel.GetLength(1))
+                        DataHandler.tilesInLevel[y, x].GetComponent<Tile>().Visible = true;
+                }
+            }
+        }
+        if (direction == Directions.Left)
+        {
+            for (int x = (int)viewer.positionInLevel.x; x >= 0; x--)
+            {
+                for (int y = (int)viewer.positionInLevel.y - (Mathf.Abs(x - (int)viewer.positionInLevel.x)); y < (int)viewer.positionInLevel.y + (Mathf.Abs(x - (int)viewer.positionInLevel.x) + 1); y++)
+                {
+                    if (y >= 0 && y < DataHandler.tilesInLevel.GetLength(0) && x >= 0 && x < DataHandler.tilesInLevel.GetLength(1))
+                        DataHandler.tilesInLevel[y, x].GetComponent<Tile>().Visible = true;
+                }
+            }
+        }
+
+    }
+
+    public IEnumerator SubscribeFOV()
+    {
+        yield return new WaitForEndOfFrame();
+        DataHandler.player.onChangedDirectionsExposed += CalculateVision;
     }
 }
