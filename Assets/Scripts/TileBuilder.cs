@@ -46,6 +46,9 @@ public class TileBuilder : MonoBehaviour
         }
 
         LoadLevel(0);
+        //update tile states by calling event
+        DataHandler.player.onChangedDirections(Directions.Up);
+
     }
 
     public void LoadLevel(int levelNumber)
