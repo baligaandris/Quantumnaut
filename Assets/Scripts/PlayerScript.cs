@@ -11,11 +11,21 @@ public class PlayerScript : MonoBehaviour
 {
     public delegate void ChangeDirectionCallback(Directions direction);
 
+    #region Fields
+
     public ChangeDirectionCallback onChangedDirections;
 
     public Vector2 positionInLevel;
 
     private Tile currentTile;
+
+    private Tile previousTile;
+
+    private Directions currentDirection;
+
+    #endregion
+
+    #region Properties
 
     public Tile CurrentTile
     {
@@ -26,6 +36,7 @@ public class PlayerScript : MonoBehaviour
 
         set
         {
+            PreviousTile = currentTile;
             currentTile = value;
 
             positionInLevel = currentTile.positionInLevel;
@@ -34,7 +45,17 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    private Directions currentDirection;
+    public Tile PreviousTile
+    {
+        get
+        {
+            return previousTile;
+        }
+        set
+        {
+            previousTile = value;
+        }
+    }
 
     public Directions CurrentDirection
     {
@@ -48,6 +69,8 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    #endregion
+
     public void Start()
     {
         CurrentTile = DataHandler.tilesInLevel[0, (int)Mathf.Ceil(DataHandler.numberOfTilesInLevel / 2)].GetComponent<Tile>();
@@ -59,6 +82,8 @@ public class PlayerScript : MonoBehaviour
 
     public void Update()
     {
+        #region MovementInputChecks
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             //CurrentTile = DataHandler.tilesInLevel[(int)CurrentTile.positionInLevel.y, (int)CurrentTile.positionInLevel.x - 1].GetComponent<Tile>();
@@ -80,6 +105,10 @@ public class PlayerScript : MonoBehaviour
             MoveIntoTile((int)CurrentTile.positionInLevel.y + 1, (int)CurrentTile.positionInLevel.x);
         }
 
+        #endregion
+
+        #region DirectionInputChecks
+
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             this.CurrentDirection = Directions.Up;
@@ -100,16 +129,16 @@ public class PlayerScript : MonoBehaviour
             this.CurrentDirection = Directions.Right;
             //onChangedDirections(Directions.Right);
         }
+
+        #endregion
     }
 
     private void MoveIntoTile(int x, int y)
     {
+        //Chech that the co-ordinates don't exceed the array.
         if(x >= 0 && y >= 0 && x <= DataHandler.numberOfTilesInLevel - 1 && y <= DataHandler.numberOfTilesInLevel - 1)
         {
-            if(DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Walkable)
-            {
-                CurrentTile = DataHandler.tilesInLevel[x, y].GetComponent<Tile>();
-            }
+            CurrentTile.GetComponent<Tile>().MoveTo(x, y);
         }
     }
 

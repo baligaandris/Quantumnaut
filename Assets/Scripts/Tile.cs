@@ -89,6 +89,27 @@ public class Tile : MonoBehaviour
         CurrentDirectionState = newDirection;
     }
 
+    public void MoveTo(int x, int y)
+    {
+        if(this.TileState == TileState.Walkable)
+        {
+            if(DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Walkable || DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Bridge)
+            {
+                DataHandler.player.CurrentTile = DataHandler.tilesInLevel[x, y].GetComponent<Tile>();
+            }
+        }
+        else if(this.TileState == TileState.Bridge)
+        {
+            if (DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Walkable || DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Bridge)
+            {
+                if (DataHandler.player.PreviousTile.positionInLevel.x - x == 0 || DataHandler.player.PreviousTile.positionInLevel.y - y == 0)
+                {
+                    DataHandler.player.CurrentTile = DataHandler.tilesInLevel[x, y].GetComponent<Tile>();
+                }
+            }
+        }
+    }
+
     public static TileState Convert(int identifier)
     {
         switch (identifier)
