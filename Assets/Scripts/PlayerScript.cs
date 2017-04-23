@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum Directions
 {
@@ -11,6 +12,8 @@ public class PlayerScript : MonoBehaviour
 {
     public delegate void ChangeDirectionCallback(Directions direction);
     public delegate void ChangeDirectionPublicCallback(PlayerScript player, Directions direction);
+
+    public Text winText;
 
     #region Fields
 
@@ -111,9 +114,17 @@ public class PlayerScript : MonoBehaviour
             //CurrentTile = DataHandler.tilesInLevel[(int)CurrentTile.positionInLevel.y + 1, (int)CurrentTile.positionInLevel.x].GetComponent<Tile>();
             if (CurrentTile.positionInLevel == new Vector2(3, 6))
             {
-                DataHandler.currentLevel += 1;
-                GameObject.FindGameObjectWithTag("MainCamera").GetComponent<TileBuilder>().LoadLevel(DataHandler.currentLevel);
-                CurrentTile = DataHandler.tilesInLevel[0, 3].GetComponent<Tile>();
+                if (DataHandler.currentLevel < 9)
+                {
+                    DataHandler.currentLevel += 1;
+                    GameObject.FindGameObjectWithTag("MainCamera").GetComponent<TileBuilder>().LoadLevel(DataHandler.currentLevel);
+                    CurrentTile = DataHandler.tilesInLevel[0, 3].GetComponent<Tile>();
+                }
+                else {
+                    Debug.Log("win");
+                    winText.enabled = true;
+                }
+
             }
             else
             {
