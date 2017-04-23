@@ -109,7 +109,16 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             //CurrentTile = DataHandler.tilesInLevel[(int)CurrentTile.positionInLevel.y + 1, (int)CurrentTile.positionInLevel.x].GetComponent<Tile>();
-            MoveIntoTile((int)CurrentTile.positionInLevel.y + 1, (int)CurrentTile.positionInLevel.x);
+            if (CurrentTile.positionInLevel == new Vector2(3, 6))
+            {
+                DataHandler.currentLevel += 1;
+                GameObject.FindGameObjectWithTag("MainCamera").GetComponent<TileBuilder>().LoadLevel(DataHandler.currentLevel);
+                CurrentTile = DataHandler.tilesInLevel[0, 3].GetComponent<Tile>();
+            }
+            else
+            {
+                MoveIntoTile((int)CurrentTile.positionInLevel.y + 1, (int)CurrentTile.positionInLevel.x);
+            }
         }
 
         #endregion

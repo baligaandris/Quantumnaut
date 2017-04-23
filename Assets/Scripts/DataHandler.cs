@@ -7,5 +7,6 @@ public static class DataHandler
     public static GameObject[,] tilesInLevel = new GameObject[numberOfTilesInLevel, numberOfTilesInLevel];
     public static Dictionary<Directions, TileState[,]> statesOfLevel;
     public static PlayerScript player;
+    public static int currentLevel=0;
 }
 
