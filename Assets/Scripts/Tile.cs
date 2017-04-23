@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
@@ -22,20 +23,20 @@ public class Tile : MonoBehaviour
             {
                 if (TileState == TileState.Bridge)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                    gameObject.GetComponent<Image>().color = Color.red;
                 }
                 else if (TileState == TileState.Wall)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                    gameObject.GetComponent<Image>().color = Color.white;
                 }
                 else if (TileState == TileState.Walkable)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+                    gameObject.GetComponent<Image>().color = Color.green;
                 }
             }
             else
             {
-                gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+                gameObject.GetComponent<Image>().color = Color.black;
             }
         }
     }
@@ -57,20 +58,20 @@ public class Tile : MonoBehaviour
             {
                 if (value == TileState.Bridge)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                    gameObject.GetComponent<Image>().color = Color.red;
                 }
                 else if (value == TileState.Wall)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                    gameObject.GetComponent<Image>().color = Color.white;
                 }
                 else if (value == TileState.Walkable)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+                    gameObject.GetComponent<Image>().color = Color.green;
                 }
             }
             else
             {
-                gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+                gameObject.GetComponent<Image>().color = Color.black;
             }
             
 

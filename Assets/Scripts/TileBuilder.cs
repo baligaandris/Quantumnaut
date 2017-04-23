@@ -6,6 +6,7 @@ using System.IO;
 public class TileBuilder : MonoBehaviour
 {
     public GameObject tilePrefab;
+    public GameObject parentObject;
 
     public GameObject[,] tilesInLevel;
 
@@ -31,15 +32,17 @@ public class TileBuilder : MonoBehaviour
         DataHandler.numberOfTilesInLevel = (int)desiredTiles;
         tilesInLevel = new GameObject[(int)desiredTiles, (int)desiredTiles];
 
-        GameObject parentObject = Instantiate(new GameObject());
-        parentObject.name = "CurrentLevel";
+        
+        //parentObject.name = "CurrentLevel";
 
 
         for (int j = 0; j < desiredTiles; j++)
         {
             for (int i = 0; i < desiredTiles; i++)
             {
-                tilesInLevel[i,j] = Instantiate(tilePrefab, new Vector3((float)(j * desiredScale) - ((desiredTiles/2) * desiredScale) + desiredScale/2 , (float)(i * desiredScale) - ((desiredTiles/2) * desiredScale) + desiredScale / 2), Quaternion.identity, parentObject.transform);
+                //tilesInLevel[i,j] = Instantiate(tilePrefab, new Vector3((float)(j * desiredScale) - ((desiredTiles/2) * desiredScale) + desiredScale/2 , (float)(i * desiredScale) - ((desiredTiles/2) * desiredScale) + desiredScale / 2), Quaternion.identity, parentObject.transform);
+                tilesInLevel[i, j] = Instantiate(tilePrefab, parentObject.transform);
+                tilesInLevel[i, j].transform.localScale = new Vector3(1, 1, 1);
                 tilesInLevel[i, j].AddComponent<Tile>().positionInLevel = new Vector2(j, i);
                 DataHandler.tilesInLevel[i, j] = tilesInLevel[i, j];
             }
@@ -47,7 +50,7 @@ public class TileBuilder : MonoBehaviour
 
         LoadLevel(0);
         //update tile states by calling event
-        DataHandler.player.onChangedDirections(Directions.Up);
+        //DataHandler.player.onChangedDirections(Directions.Up);
 
     }
 
