@@ -79,9 +79,9 @@ public class Tile : MonoBehaviour
         }
     }
 
-    private Directions currentDirectionState;
+    private Direction currentDirectionState;
 
-    public Directions CurrentDirectionState
+    public Direction CurrentDirectionState
     {
         get
         {
@@ -107,21 +107,21 @@ public class Tile : MonoBehaviour
     {
         switch (currentDirectionState)
         {
-            case Directions.Up:
+            case Direction.Up:
                 //gameObject.GetComponent<SpriteRenderer>().color = Color.green;
-                this.TileState = DataHandler.statesOfLevel[Directions.Up][(int)positionInLevel.x, 6 - (int)positionInLevel.y];
+                this.TileState = DataHandler.statesOfLevel[Direction.Up][(int)positionInLevel.x, 6 - (int)positionInLevel.y];
                 break;
-            case Directions.Down:
+            case Direction.Down:
                 //gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-                this.TileState = DataHandler.statesOfLevel[Directions.Down][(int)positionInLevel.x, 6 - (int)positionInLevel.y];
+                this.TileState = DataHandler.statesOfLevel[Direction.Down][(int)positionInLevel.x, 6 - (int)positionInLevel.y];
                 break;
-            case Directions.Left:
+            case Direction.Left:
                 //gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-                this.TileState = DataHandler.statesOfLevel[Directions.Left][(int)positionInLevel.x, 6 - (int)positionInLevel.y];
+                this.TileState = DataHandler.statesOfLevel[Direction.Left][(int)positionInLevel.x, 6 - (int)positionInLevel.y];
                 break;
-            case Directions.Right:
+            case Direction.Right:
                 //gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
-                this.TileState = DataHandler.statesOfLevel[Directions.Right][(int)positionInLevel.x, 6 - (int)positionInLevel.y];
+                this.TileState = DataHandler.statesOfLevel[Direction.Right][(int)positionInLevel.x, 6 - (int)positionInLevel.y];
                 break;
             default:
                 break;
@@ -135,7 +135,7 @@ public class Tile : MonoBehaviour
         
     }
 
-    public void OnDirectionsChanged(Directions newDirection)
+    public void OnDirectionsChanged(Direction newDirection)
     {
         CurrentDirectionState = newDirection;
     }

@@ -44,20 +44,28 @@ public class World : MonoBehaviour {
         UpdateTileStates(file);
 
         //generate neighbour strings and sprites
-        UpdateTileInfo(Directions.Up);
-        UpdateTileInfo(Directions.Down);
-        UpdateTileInfo(Directions.Left);
-        UpdateTileInfo(Directions.Right);
+        UpdateTileInfo(Direction.Up);
+        UpdateTileInfo(Direction.Down);
+        UpdateTileInfo(Direction.Left);
+        UpdateTileInfo(Direction.Right);
 
         //update direction and sprite
-        SwitchDirection(Directions.Up);
+        SwitchDirection(Direction.Up);
+
+        //player sprite needs to be at the bottom of the hierarchy
+        //to be rendered above tiles
+        PlayerNew p = GetComponentInChildren<PlayerNew>();
+        p.transform.SetSiblingIndex(p.transform.parent.childCount - 1);
+
+        //Reset player
+        p.ResetPosition();
     }
 
-    public void SwitchDirection(Directions dir)
+    public void SwitchDirection(Direction dir)
     {
         foreach (TileNew tile in tileScripts)
         {
-            tile.currentDir = Directions.Up;
+            tile.currentDir = dir;
         }
     }
 
@@ -98,7 +106,7 @@ public class World : MonoBehaviour {
 
     }
     
-    void UpdateTileInfo(Directions dir)
+    void UpdateTileInfo(Direction dir)
     {
         foreach (TileNew tile in tileScripts)
         {
@@ -117,7 +125,7 @@ public class LevelInfo
 {
     public TileState[,,] states;
 
-    public TileState getState(Directions direction, int x, int y)
+    public TileState getState(Direction direction, int x, int y)
     {
         return states[(int)direction, x, y];
     }

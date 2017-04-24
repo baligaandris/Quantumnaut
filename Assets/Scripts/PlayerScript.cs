@@ -3,18 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum Directions
-{
-    Up=0,
-    Down=1,
-    Left=2,
-    Right=3
-}
+
 
 public class PlayerScript : MonoBehaviour
 {
-    public delegate void ChangeDirectionCallback(Directions direction);
-    public delegate void ChangeDirectionPublicCallback(PlayerScript player, Directions direction);
+    public delegate void ChangeDirectionCallback(Direction direction);
+    public delegate void ChangeDirectionPublicCallback(PlayerScript player, Direction direction);
 
     public Text winText;
 
@@ -29,7 +23,7 @@ public class PlayerScript : MonoBehaviour
 
     private Tile previousTile;
 
-    private Directions currentDirection = Directions.Up;
+    private Direction currentDirection = Direction.Up;
 
     #endregion
 
@@ -67,7 +61,7 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public Directions CurrentDirection
+    public Direction CurrentDirection
     {
         get
         {
@@ -141,22 +135,22 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            this.CurrentDirection = Directions.Up;
+            this.CurrentDirection = Direction.Up;
             //onChangedDirections(Directions.Up);
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            this.CurrentDirection = Directions.Down;
+            this.CurrentDirection = Direction.Down;
             //onChangedDirections(Directions.Down);
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            this.CurrentDirection = Directions.Left;
+            this.CurrentDirection = Direction.Left;
             //onChangedDirections(Directions.Left);
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            this.CurrentDirection = Directions.Right;
+            this.CurrentDirection = Direction.Right;
             //onChangedDirections(Directions.Right);
         }
 

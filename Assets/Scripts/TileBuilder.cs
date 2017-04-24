@@ -10,7 +10,7 @@ public class TileBuilder : MonoBehaviour
 
     public GameObject[,] tilesInLevel;
 
-    public Dictionary<Directions, TileState[,]> currentLevelStates = new Dictionary<Directions, TileState[,]>();
+    public Dictionary<Direction, TileState[,]> currentLevelStates = new Dictionary<Direction, TileState[,]>();
 
     public TextAsset[] levelAssetArray;
 
@@ -61,7 +61,7 @@ public class TileBuilder : MonoBehaviour
         DataHandler.statesOfLevel = currentLevelStates;
     }
 
-    public void CalculateVision(PlayerScript viewer, Directions direction)
+    public void CalculateVision(PlayerScript viewer, Direction direction)
     {
         Debug.Log("Calculating");
         return;
@@ -69,7 +69,7 @@ public class TileBuilder : MonoBehaviour
         {
             tileObject.GetComponent<Tile>().Visible = false;
         }
-        if (direction == Directions.Up)
+        if (direction == Direction.Up)
         {
             for (int y = (int)viewer.positionInLevel.y; y < DataHandler.tilesInLevel.GetLength(1); y++)
             {
@@ -80,7 +80,7 @@ public class TileBuilder : MonoBehaviour
                 }
             }
         }
-        if (direction == Directions.Down)
+        if (direction == Direction.Down)
         {
             for (int y = (int)viewer.positionInLevel.y; y >= 0; y--)
             {
@@ -92,7 +92,7 @@ public class TileBuilder : MonoBehaviour
             }
         }
 
-        if (direction == Directions.Right)
+        if (direction == Direction.Right)
         {
             for (int x = (int)viewer.positionInLevel.x; x < DataHandler.tilesInLevel.GetLength(0); x++)
             {
@@ -103,7 +103,7 @@ public class TileBuilder : MonoBehaviour
                 }
             }
         }
-        if (direction == Directions.Left)
+        if (direction == Direction.Left)
         {
             for (int x = (int)viewer.positionInLevel.x; x >= 0; x--)
             {

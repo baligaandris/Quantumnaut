@@ -8,8 +8,8 @@ public class TileNew : MonoBehaviour {
     public Vector2 coords;
     public TileInfo info;
 
-    private Directions _currentDir;
-    public Directions currentDir
+    private Direction _currentDir;
+    public Direction currentDir
     {
         get { return _currentDir; }
         set
@@ -44,7 +44,7 @@ public class TileNew : MonoBehaviour {
     }
 
     
-    public string getNeighbourString(Directions dir)
+    public string getNeighbourString(Direction dir)
     {
         string res = "";
 
@@ -96,17 +96,17 @@ public class TileInfo
     }
 
 
-    public DirectionInfo FromDirection(Directions dir)
+    public DirectionInfo FromDirection(Direction dir)
     {
         switch (dir)
         {
-            case Directions.Up:
+            case Direction.Up:
                 return Up;
-            case Directions.Down:
+            case Direction.Down:
                 return Down;
-            case Directions.Left:
+            case Direction.Left:
                 return Left;
-            case Directions.Right:
+            case Direction.Right:
                 return Right;
             default:
                 return null;
