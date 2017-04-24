@@ -27,7 +27,7 @@ public struct iVector2
 }
 
 public class PlayerNew : MonoBehaviour {
-
+    public Sprite[] directionSprites;
 
     public iVector2 positionTile;
     public Vector2 positionWorld
@@ -44,7 +44,22 @@ public class PlayerNew : MonoBehaviour {
         set {
             _currentDir = value;
             Public.World.SwitchDirection(value);
-
+            switch (value)
+            {
+                case Direction.Up:
+                    GetComponentInChildren<Image>().sprite = directionSprites[0];
+                    break;
+                case Direction.Down:
+                    GetComponentInChildren<Image>().sprite = directionSprites[1];
+                    break;
+                case Direction.Left:
+                    GetComponentInChildren<Image>().sprite = directionSprites[3];
+                    break;
+                case Direction.Right:
+                    GetComponentInChildren<Image>().sprite = directionSprites[2];
+                    break;
+            }
+                
             CalculateVision(_currentDir);
         }
     }
@@ -116,8 +131,13 @@ public class PlayerNew : MonoBehaviour {
                 for (int x = this.positionTile.x - (Mathf.Abs(y) - this.positionTile.y); x < this.positionTile.x + (Mathf.Abs(y) - positionTile.y) + 1; x++)
                 {
                     if (y >= 0 && y < Public.World.tileScripts.GetLength(1) && x >= 0 && x < Public.World.tileScripts.GetLength(0))
+                    {
+                        if (!(this.positionTile.x == x && positionTile.y == y))
+                        {
+                            Public.World.tileScripts[x, y].Visible = true;
+                        }
                         //DataHandler.tilesInLevel[y, x].GetComponent<Tile>().Visible = true;
-                        Public.World.tileScripts[x, y].Visible = true;
+                    }
                 }
             }
         }
@@ -129,9 +149,14 @@ public class PlayerNew : MonoBehaviour {
                 {
                     //Debug.Log(x + ", " + y);
                     if (y >= 0 && y < Public.World.tileScripts.GetLength(1) && x >= 0 && x < Public.World.tileScripts.GetLength(0))
+                    {
                         //DataHandler.tilesInLevel[y, x].GetComponent<Tile>().Visible = true;
-                        Public.World.tileScripts[x, y].Visible = true;
+                        if (!(this.positionTile.x == x && positionTile.y == y))
+                        {
+                            Public.World.tileScripts[x, y].Visible = true;
+                        }
                         //Public.World.tileScripts[x, y].gameObject.GetComponent<Image>().color = Color.white;
+                    }
                 }
             }
         }
@@ -143,8 +168,13 @@ public class PlayerNew : MonoBehaviour {
                 for (int y = this.positionTile.y - (Mathf.Abs(x - this.positionTile.x)); y < this.positionTile.y + (Mathf.Abs(x - positionTile.x) + 1); y++)
                 {
                     if (y >= 0 && y < Public.World.tileScripts.GetLength(1) && x >= 0 && x < Public.World.tileScripts.GetLength(0))
+                    {
                         //DataHandler.tilesInLevel[y, x].GetComponent<Tile>().Visible = true;
-                        Public.World.tileScripts[x, y].Visible = true;
+                        if (!(this.positionTile.x == x && positionTile.y == y))
+                        {
+                            Public.World.tileScripts[x, y].Visible = true;
+                        }
+                    }
                 }
             }
         }
@@ -155,8 +185,13 @@ public class PlayerNew : MonoBehaviour {
                 for (int y = this.positionTile.y - (Mathf.Abs(x - this.positionTile.x)); y < this.positionTile.y + (Mathf.Abs(x - positionTile.x) + 1); y++)
                 {
                     if (y >= 0 && y < Public.World.tileScripts.GetLength(1) && x >= 0 && x < Public.World.tileScripts.GetLength(0))
+                    {
                         //DataHandler.tilesInLevel[y, x].GetComponent<Tile>().Visible = true;
-                        Public.World.tileScripts[x, y].Visible = true;
+                        if (!(this.positionTile.x == x && positionTile.y == y))
+                        {
+                            Public.World.tileScripts[x, y].Visible = true;
+                        }
+                    }
                 }
             }
         }
