@@ -21,6 +21,14 @@ public class TileNew : MonoBehaviour {
 
     }
 
+    //shortcut for playerscript
+    public TileState currentState
+    {
+        get
+        {
+            return info.FromDirection(currentDir).state;
+        }
+    }
     
 
     public Sprite sprite
