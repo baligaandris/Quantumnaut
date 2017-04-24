@@ -21,6 +21,7 @@ public class TileBuilder : MonoBehaviour
     {
         if(DataHandler.player != null)
         {
+
             DataHandler.player.onChangedDirectionsExposed += CalculateVision;
         }
         else
@@ -49,11 +50,11 @@ public class TileBuilder : MonoBehaviour
         }
 
         LoadLevel(0);
+        
         //update tile states by calling event
         //DataHandler.player.onChangedDirections(Directions.Up);
 
     }
-
     public void LoadLevel(int levelNumber)
     {
         currentLevelStates = LevelLoader.LoadLevel(levelAssetArray[levelNumber]);
@@ -63,6 +64,7 @@ public class TileBuilder : MonoBehaviour
     public void CalculateVision(PlayerScript viewer, Directions direction)
     {
         Debug.Log("Calculating");
+        return;
         foreach (GameObject tileObject in DataHandler.tilesInLevel)
         {
             tileObject.GetComponent<Tile>().Visible = false;
@@ -119,5 +121,6 @@ public class TileBuilder : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         DataHandler.player.onChangedDirectionsExposed += CalculateVision;
+
     }
 }
