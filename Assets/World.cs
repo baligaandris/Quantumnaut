@@ -112,7 +112,7 @@ public class World : MonoBehaviour {
         {
             string neighbours = tile.getNeighbourString(dir);
             tile.info.FromDirection(dir).neighbourString = neighbours;
-            tile.info.FromDirection(dir).sprite = Public.SpriteInfo.FetchSprite(neighbours);
+            tile.info.FromDirection(dir).sprite = Public.SpriteInfo.FetchSprite(neighbours,dir);
         }
     }
 

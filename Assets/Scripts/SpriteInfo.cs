@@ -10,19 +10,19 @@ public class SpriteInfo : MonoBehaviour {
     {
         public string name;
         public string pattern;
-        public Sprite sprite;
+        public Sprite[] sprites;
     }
 
     public List<TileInfo> tilesList = new List<TileInfo>();
-    public Sprite defaultSprite;
+    public Sprite[] defaultSprites;
 
-    public Sprite FetchSprite(string neighbours)
+    public Sprite FetchSprite(string neighbours, Direction dir)
     {
         foreach (TileInfo tile in tilesList)
         {
-            if (Regex.IsMatch(neighbours, tile.pattern)) return tile.sprite;
+            if (Regex.IsMatch(neighbours, tile.pattern)) return tile.sprites[(int)dir];
         }
-        return defaultSprite;
+        return defaultSprites[(int)dir];
         
     }
     

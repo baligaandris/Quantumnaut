@@ -141,7 +141,7 @@ public class Tile : MonoBehaviour
     }
     public void UpdateSprite()
     {
-        GetComponent<Image>().sprite = Camera.main.GetComponent<SpriteInfo>().FetchSprite(Neighbours());
+        //GetComponent<Image>().sprite = Camera.main.GetComponent<SpriteInfo>().FetchSprite(Neighbours());
     }
 
 
