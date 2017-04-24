@@ -1,12 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class TileNew : MonoBehaviour {
 
     public Vector2 coords;
     public TileInfo info;
+
+    private bool visible;
+
+    public bool Visible
+    {
+        get
+        {
+            return visible;
+        }
+        set
+        {
+            visible = value;
+            if (!visible)
+            {
+                GetComponent<Image>().color = Color.black;
+            }
+            else
+            {
+                GetComponent<Image>().color = Color.white;
+            }
+        }
+    }
 
     private Direction _currentDir;
     public Direction currentDir

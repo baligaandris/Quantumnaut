@@ -171,4 +171,6 @@ public class PlayerScript : MonoBehaviour
         yield return new WaitForEndOfFrame();
         CurrentTile = DataHandler.tilesInLevel[0, (int)Mathf.Ceil(DataHandler.numberOfTilesInLevel / 2)].GetComponent<Tile>();
     }
+
+    
 }

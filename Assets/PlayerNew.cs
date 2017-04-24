@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum Direction
 {
@@ -44,6 +45,7 @@ public class PlayerNew : MonoBehaviour {
             _currentDir = value;
             Public.World.SwitchDirection(value);
 
+            CalculateVision(_currentDir);
         }
     }
 
@@ -96,8 +98,68 @@ public class PlayerNew : MonoBehaviour {
         positionWorld = ((RectTransform)Public.World.tileScripts[x, y].transform).anchoredPosition;
 
         //update heading
-        heading = (dir == Direction.Up || dir == Direction.Down) ? Heading.Vertical : Heading.Horizontal; 
+        heading = (dir == Direction.Up || dir == Direction.Down) ? Heading.Vertical : Heading.Horizontal;
 
+        CalculateVision(this.currentDir);
+    }
+
+    public void CalculateVision(Direction direction)
+    {
+        foreach (TileNew tile in Public.World.tileScripts)
+        {
+            tile.Visible = false;
+        }
+        if (direction == Direction.Down)
+        {
+            for (int y = (int)this.positionTile.y; y < /*DataHandler.tilesInLevel.GetLength(1)*/ Public.World.tileScripts.GetLength(1); y++)
+            {
+                for (int x = this.positionTile.x - (Mathf.Abs(y) - this.positionTile.y); x < this.positionTile.x + (Mathf.Abs(y) - positionTile.y) + 1; x++)
+                {
+                    if (y >= 0 && y < Public.World.tileScripts.GetLength(1) && x >= 0 && x < Public.World.tileScripts.GetLength(0))
+                        //DataHandler.tilesInLevel[y, x].GetComponent<Tile>().Visible = true;
+                        Public.World.tileScripts[x, y].Visible = true;
+                }
+            }
+        }
+        if (direction == Direction.Up)
+        {
+            for (int y = (int)this.positionTile.y; y >= /*DataHandler.tilesInLevel.GetLength(1)*/ 0; y--)
+            {
+                for (int x = this.positionTile.x - (Mathf.Abs(y - this.positionTile.y)); x < this.positionTile.x + (Mathf.Abs(y - positionTile.y)) + 1; x++)
+                {
+                    //Debug.Log(x + ", " + y);
+                    if (y >= 0 && y < Public.World.tileScripts.GetLength(1) && x >= 0 && x < Public.World.tileScripts.GetLength(0))
+                        //DataHandler.tilesInLevel[y, x].GetComponent<Tile>().Visible = true;
+                        Public.World.tileScripts[x, y].Visible = true;
+                        //Public.World.tileScripts[x, y].gameObject.GetComponent<Image>().color = Color.white;
+                }
+            }
+        }
+
+        if (direction == Direction.Right)
+        {
+            for (int x = (int)this.positionTile.x; x < /*DataHandler.tilesInLevel.GetLength(1)*/ Public.World.tileScripts.GetLength(1); x++)
+            {
+                for (int y = this.positionTile.y - (Mathf.Abs(x - this.positionTile.x)); y < this.positionTile.y + (Mathf.Abs(x - positionTile.x) + 1); y++)
+                {
+                    if (y >= 0 && y < Public.World.tileScripts.GetLength(1) && x >= 0 && x < Public.World.tileScripts.GetLength(0))
+                        //DataHandler.tilesInLevel[y, x].GetComponent<Tile>().Visible = true;
+                        Public.World.tileScripts[x, y].Visible = true;
+                }
+            }
+        }
+        if (direction == Direction.Left)
+        {
+            for (int x = (int)this.positionTile.x; x >= /*DataHandler.tilesInLevel.GetLength(1)*/ 0; x--)
+            {
+                for (int y = this.positionTile.y - (Mathf.Abs(x - this.positionTile.x)); y < this.positionTile.y + (Mathf.Abs(x - positionTile.x) + 1); y++)
+                {
+                    if (y >= 0 && y < Public.World.tileScripts.GetLength(1) && x >= 0 && x < Public.World.tileScripts.GetLength(0))
+                        //DataHandler.tilesInLevel[y, x].GetComponent<Tile>().Visible = true;
+                        Public.World.tileScripts[x, y].Visible = true;
+                }
+            }
+        }
 
     }
 
