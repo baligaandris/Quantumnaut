@@ -29,7 +29,7 @@ public class World : MonoBehaviour {
         tileScripts = new TileNew[worldSize, worldSize];
         InstantiateTiles();
 
-        LoadLevelFromFile(levelFiles[0]);
+        LoadLevelFromFile(levelFiles[2]);
 
 
 

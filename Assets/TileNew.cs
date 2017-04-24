@@ -63,6 +63,9 @@ public class TileNew : MonoBehaviour {
 
                 if (ts == TileState.Wall)
                 { res += "w"; continue; }
+
+                if (ts == TileState.Bridge)
+                { res += "b"; continue; }
             }
         }
 
