@@ -71,6 +71,7 @@ public class PlayerNew : MonoBehaviour {
         positionTile = new iVector2(3, 6);
         positionWorld = ((RectTransform)Public.World.tileScripts[positionTile.x,positionTile.y].transform).anchoredPosition;
         heading = Heading.Vertical;
+        CalculateVision(currentDir);
     }
 
 
@@ -93,6 +94,8 @@ public class PlayerNew : MonoBehaviour {
         //check if tile exists
         if (x < 0 || y < 0 || x > Public.World.tileScripts.GetLength(0) || y > Public.World.tileScripts.GetLength(1)) return;
 
+        //check if current tile is walkable
+        if (Public.World.tileScripts[positionTile.x, positionTile.y].info.FromDirection(currentDir).state == TileState.Wall) return;
 
         //check if tile is walkable
         //REMEMBER: dir is the movement direction, currentDir is the looking direction
@@ -120,6 +123,7 @@ public class PlayerNew : MonoBehaviour {
 
     public void CalculateVision(Direction direction)
     {
+        return;
         foreach (TileNew tile in Public.World.tileScripts)
         {
             tile.Visible = false;

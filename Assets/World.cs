@@ -29,7 +29,7 @@ public class World : MonoBehaviour {
         tileScripts = new TileNew[worldSize, worldSize];
         InstantiateTiles();
 
-        LoadLevelFromFile(levelFiles[2]);
+        LoadLevelFromFile(levelFiles[4]);
 
 
 
@@ -92,14 +92,15 @@ public class World : MonoBehaviour {
     //TODO get rid of file parameter
     void UpdateTileStates(TextAsset file)
     {
+        string text = file.text.Replace("\r", "").Replace("\n", "").Replace("\t", "");
         int size = worldSize * worldSize; // = 49
         for (int i = 0; i < size; i++)
         {
             string res = "";
-            res += file.text[i];
-            res += file.text[i + size];
-            res += file.text[i + 2 * size];
-            res += file.text[i + 3 * size];
+            res += text[i];
+            res += text[i + size];
+            res += text[i + 2 * size];
+            res += text[i + 3 * size];
 
             tileScripts[i % worldSize, i / worldSize].info = TileInfo.FromString(res);
         }
@@ -132,12 +133,13 @@ public class LevelInfo
 
     public static LevelInfo FromFile(TextAsset file)
     {
+        string text = file.text.Replace("\r", "").Replace("\n","").Replace("\t", "");
         LevelInfo info = new LevelInfo();
         info.states = new TileState[4, 7, 7];
-        for (int i = 0; i < file.text.Length; i++)
+        for (int i = 0; i < text.Length; i++)
         {
-            TileState p = (TileState)int.Parse(file.text[i].ToString());
-            info.states[i / 49, i % 7, (i / 7) % 7] = (TileState)int.Parse(file.text[i].ToString());
+            TileState p = (TileState)int.Parse(text[i].ToString());
+            info.states[i / 49, i % 7, (i / 7) % 7] = (TileState)int.Parse(text[i].ToString());
         }
         return info;
     }
