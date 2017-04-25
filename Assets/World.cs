@@ -21,20 +21,30 @@ public class World : MonoBehaviour {
     //all levels
     public TextAsset[] levelFiles;
 
+    public int nCurrentLevel = 0;
+
     public LevelInfo currentLevel;
 
     public TileNew[,] tileScripts;
 
 	void Start () {
+        nCurrentLevel = 0;
+
         tileScripts = new TileNew[worldSize, worldSize];
         InstantiateTiles();
-
-        LoadLevelFromFile(levelFiles[4]);
-
-
-
+        LoadLevelFromFile(levelFiles[nCurrentLevel]);
     }
-
+    public void LoadNextLevel()
+    {
+        nCurrentLevel++;
+        //check if finished game
+        if (nCurrentLevel >= levelFiles.Length)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+            return;
+        }
+        LoadLevelFromFile(levelFiles[nCurrentLevel]);
+    }
     public void LoadLevelFromFile(TextAsset file)
     {
         //create levelinfo

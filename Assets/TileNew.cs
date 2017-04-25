@@ -38,7 +38,8 @@ public class TileNew : MonoBehaviour {
         {
             _currentDir = value;
             sprite = info.FromDirection(value).sprite;
-            GetComponentInChildren<UnityEngine.UI.Text>().text = info.FromDirection(value).neighbourString.Insert(6,"\n").Insert(3,"\n").Insert(6,"</b></color>").Insert(5, "<color=#000000><b>");
+            //DEBUG
+            //GetComponentInChildren<UnityEngine.UI.Text>().text = info.FromDirection(value).neighbourString.Insert(6,"\n").Insert(3,"\n").Insert(6,"</b></color>").Insert(5, "<color=#000000><b>");
         }
 
     }

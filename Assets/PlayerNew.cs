@@ -71,14 +71,37 @@ public class PlayerNew : MonoBehaviour {
         positionTile = new iVector2(3, 6);
         positionWorld = ((RectTransform)Public.World.tileScripts[positionTile.x,positionTile.y].transform).anchoredPosition;
         heading = Heading.Vertical;
+        currentDir = Direction.Up;
         CalculateVision(currentDir);
     }
 
+    //hackityhackhack
+    void TryExitLevel()
+    {
+        int x = positionTile.x, y = positionTile.y;
+        //check if the current tile is walkable
+        if (Public.World.tileScripts[x, y].info.FromDirection(currentDir).state == TileState.Wall) return;
+        //check bridge movement conditions
+        if (Public.World.tileScripts[positionTile.x, positionTile.y].info.FromDirection(currentDir).state == TileState.Bridge)
+        {
+            if (heading == Heading.Horizontal) return;
+        }
+
+        Debug.Log("Passed");
+        Public.World.LoadNextLevel();
+
+    }
 
     public void Move(Direction dir)
     {
         //get next tile coords
         int x = positionTile.x, y = positionTile.y;
+
+        //goto:hackityhackhack
+        if (x == 3 && y == 0 && dir == Direction.Up)
+        { TryExitLevel(); return; }
+
+
         switch (dir)
         {
             case Direction.Up:
@@ -123,7 +146,6 @@ public class PlayerNew : MonoBehaviour {
 
     public void CalculateVision(Direction direction)
     {
-        return;
         foreach (TileNew tile in Public.World.tileScripts)
         {
             tile.Visible = false;
