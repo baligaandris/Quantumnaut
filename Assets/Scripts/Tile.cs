@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
     //public bool walkable = true;
 
-    private bool visible = false;
+    private bool visible = true;
 
     public bool Visible
     {
@@ -22,20 +23,20 @@ public class Tile : MonoBehaviour
             {
                 if (TileState == TileState.Bridge)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                    gameObject.GetComponent<Image>().color = Color.red;
                 }
                 else if (TileState == TileState.Wall)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                    gameObject.GetComponent<Image>().color = Color.white;
                 }
-                else if (TileState == TileState.Walkable)
+                else if (TileState == TileState.Path)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+                    gameObject.GetComponent<Image>().color = Color.green;
                 }
             }
             else
             {
-                gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+                gameObject.GetComponent<Image>().color = Color.black;
             }
         }
     }
@@ -52,34 +53,35 @@ public class Tile : MonoBehaviour
 
         set
         {
+            gameObject.GetComponentInChildren<Text>().text = Neighbours();
             tileState = value;
             if (visible)
             {
                 if (value == TileState.Bridge)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                    gameObject.GetComponent<Image>().color = Color.red;
                 }
                 else if (value == TileState.Wall)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                    gameObject.GetComponent<Image>().color = Color.white;
                 }
-                else if (value == TileState.Walkable)
+                else if (value == TileState.Path)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+                    gameObject.GetComponent<Image>().color = Color.green;
                 }
             }
             else
             {
-                gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+                gameObject.GetComponent<Image>().color = Color.black;
             }
-            
+            UpdateSprite();
 
         }
     }
 
-    private Directions currentDirectionState;
+    private Direction currentDirectionState;
 
-    public Directions CurrentDirectionState
+    public Direction CurrentDirectionState
     {
         get
         {
@@ -89,27 +91,7 @@ public class Tile : MonoBehaviour
         {
             currentDirectionState = value;
 
-            switch (value)
-            {
-                case Directions.Up:
-                    //gameObject.GetComponent<SpriteRenderer>().color = Color.green;
-                    this.TileState = DataHandler.statesOfLevel[Directions.Up][(int)positionInLevel.x, 6-(int)positionInLevel.y];
-                    break;
-                case Directions.Down:
-                    //gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-                    this.TileState = DataHandler.statesOfLevel[Directions.Down][(int)positionInLevel.x, 6-(int)positionInLevel.y];
-                    break;
-                case Directions.Left:
-                    //gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-                    this.TileState = DataHandler.statesOfLevel[Directions.Left][(int)positionInLevel.x, 6-(int)positionInLevel.y];
-                    break;
-                case Directions.Right:
-                    //gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
-                    this.TileState = DataHandler.statesOfLevel[Directions.Right][(int)positionInLevel.x, 6-(int)positionInLevel.y];
-                    break;
-                default:
-                    break;
-            }
+            UpdateTileState();
 
             //DEBUGGING!!!
 
@@ -120,19 +102,52 @@ public class Tile : MonoBehaviour
         }
     }
 
+
+    public void UpdateTileState()
+    {
+        switch (currentDirectionState)
+        {
+            case Direction.Up:
+                //gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+                this.TileState = DataHandler.statesOfLevel[Direction.Up][(int)positionInLevel.x, 6 - (int)positionInLevel.y];
+                break;
+            case Direction.Down:
+                //gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                this.TileState = DataHandler.statesOfLevel[Direction.Down][(int)positionInLevel.x, 6 - (int)positionInLevel.y];
+                break;
+            case Direction.Left:
+                //gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                this.TileState = DataHandler.statesOfLevel[Direction.Left][(int)positionInLevel.x, 6 - (int)positionInLevel.y];
+                break;
+            case Direction.Right:
+                //gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+                this.TileState = DataHandler.statesOfLevel[Direction.Right][(int)positionInLevel.x, 6 - (int)positionInLevel.y];
+                break;
+            default:
+                break;
+        }
+    }
+
+
     public void Start()
     {
         DataHandler.player.onChangedDirections += OnDirectionsChanged;
+        
     }
 
-    public void OnDirectionsChanged(Directions newDirection)
+    public void OnDirectionsChanged(Direction newDirection)
     {
         CurrentDirectionState = newDirection;
     }
+    public void UpdateSprite()
+    {
+        //GetComponent<Image>().sprite = Camera.main.GetComponent<SpriteInfo>().FetchSprite(Neighbours());
+    }
+
 
     public void MoveTo(int x, int y)
     {
-        if(this.TileState == TileState.Walkable)
+        if(this.TileState == TileState.Path)
         {
             if(DataHandler.player.PreviousTile!= null)
             {
@@ -140,14 +155,14 @@ public class Tile : MonoBehaviour
                 //Debug.Log(DataHandler.player.PreviousTile.positionInLevel.y + "-" + y + "=" + (DataHandler.player.PreviousTile.positionInLevel.y - y));
             }
             
-            if (DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Walkable || DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Bridge)
+            if (DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Path || DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Bridge)
             {
                 DataHandler.player.CurrentTile = DataHandler.tilesInLevel[x, y].GetComponent<Tile>();
             }
         }
         else if(this.TileState == TileState.Bridge)
         {
-            if (DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Walkable || DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Bridge)
+            if (DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Path || DataHandler.tilesInLevel[x, y].GetComponent<Tile>().TileState == TileState.Bridge)
             {
                 //Debug.Log(DataHandler.player.PreviousTile.positionInLevel.x + "-" + x + "=" + (DataHandler.player.PreviousTile.positionInLevel.x - x));
                 //Debug.Log(DataHandler.player.PreviousTile.positionInLevel.y + "-" + y + "=" + (DataHandler.player.PreviousTile.positionInLevel.y - y));
@@ -167,16 +182,48 @@ public class Tile : MonoBehaviour
             case 0:
                 return TileState.Wall;
             case 1:
-                return TileState.Walkable;
+                return TileState.Path;
             case 2:
                 return TileState.Bridge;
             default:
                 return TileState.Wall;
         }
     }
+
+
+
+
+    public string Neighbours()
+    {
+        string res = "";
+
+        for(int x = (int)positionInLevel.x - 1; x <= (int)positionInLevel.x + 1; x++)
+        {
+            for (int y = (int)positionInLevel.y - 1; y <= (int)positionInLevel.y + 1; y++)
+            {
+                
+                //check if outside grid
+                if (x < 0 || y < 0 || x >= DataHandler.tilesInLevel.GetLength(0) || y >= DataHandler.tilesInLevel.GetLength(1))
+                { res += "e"; continue; }
+
+                TileState ts = DataHandler.tilesInLevel[y,x].GetComponent<Tile>().tileState;
+                if (ts == TileState.Path)
+                { res += "p"; continue; }
+
+                if (ts == TileState.Wall) 
+                { res += "w"; continue; }
+            }
+        }
+
+
+        return res;
+    }
+
 }
 
 public enum TileState
 {
-    Wall, Walkable, Bridge
+    Wall = 0,
+    Path = 1,
+    Bridge = 2
 }

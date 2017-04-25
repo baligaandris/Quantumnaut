@@ -4,13 +4,13 @@ using UnityEngine;
 
 public static class LevelLoader
 {
-    public static Dictionary<Directions, TileState[,]> LoadLevel(TextAsset levelFile)
+    public static Dictionary<Direction, TileState[,]> LoadLevel(TextAsset levelFile)
     {
-        Dictionary<Directions, TileState[,]> levelDictionary = new Dictionary<Directions, TileState[,]>();
-        levelDictionary.Add(Directions.Up, new TileState[7, 7]);
-        levelDictionary.Add(Directions.Down, new TileState[7, 7]);
-        levelDictionary.Add(Directions.Left, new TileState[7, 7]);
-        levelDictionary.Add(Directions.Right, new TileState[7, 7]);
+        Dictionary<Direction, TileState[,]> levelDictionary = new Dictionary<Direction, TileState[,]>();
+        levelDictionary.Add(Direction.Up, new TileState[7, 7]);
+        levelDictionary.Add(Direction.Down, new TileState[7, 7]);
+        levelDictionary.Add(Direction.Left, new TileState[7, 7]);
+        levelDictionary.Add(Direction.Right, new TileState[7, 7]);
 
 
         string textForLevel = levelFile.text;
@@ -31,44 +31,44 @@ public static class LevelLoader
                     //Up
                     if(i == 0)
                     {
-                        if(levelDictionary[Directions.Up] == null)
+                        if(levelDictionary[Direction.Up] == null)
                         {
-                            levelDictionary[Directions.Up] = new TileState[7, 7];
+                            levelDictionary[Direction.Up] = new TileState[7, 7];
                         }
-                        levelDictionary[Directions.Up][q, (j % 8)/*(int)Mathf.Floor(j / 8)*/] = Tile.Convert(int.Parse(tilesInLine[q]));
+                        levelDictionary[Direction.Up][q, (j % 8)/*(int)Mathf.Floor(j / 8)*/] = Tile.Convert(int.Parse(tilesInLine[q]));
 
                         Debug.Log(7-(j % 8) + " : " + q);
                     }
                     //Down
                     else if(i == 1)
                     {
-                        if (levelDictionary[Directions.Down] == null)
+                        if (levelDictionary[Direction.Down] == null)
                         {
-                            levelDictionary[Directions.Down] = new TileState[7, 7];
+                            levelDictionary[Direction.Down] = new TileState[7, 7];
                         }
-                        levelDictionary[Directions.Down][q, (j % 8)] = Tile.Convert(int.Parse(tilesInLine[q]));
+                        levelDictionary[Direction.Down][q, (j % 8)] = Tile.Convert(int.Parse(tilesInLine[q]));
 
                         Debug.Log(7 - (j % 8) + " : " + q);
                     }
                     //Left
                     else if(i == 2)
                     {
-                        if (levelDictionary[Directions.Left] == null)
+                        if (levelDictionary[Direction.Left] == null)
                         {
-                            levelDictionary[Directions.Left] = new TileState[7, 7];
+                            levelDictionary[Direction.Left] = new TileState[7, 7];
                         }
-                        levelDictionary[Directions.Left][q, (j % 8)] = Tile.Convert(int.Parse(tilesInLine[q]));
+                        levelDictionary[Direction.Left][q, (j % 8)] = Tile.Convert(int.Parse(tilesInLine[q]));
 
                         Debug.Log(7 - (j % 8) + " : " + q);
                     }
                     //Right
                     else if(i == 3)
                     {
-                        if (levelDictionary[Directions.Right] == null)
+                        if (levelDictionary[Direction.Right] == null)
                         {
-                            levelDictionary[Directions.Right] = new TileState[7, 7];
+                            levelDictionary[Direction.Right] = new TileState[7, 7];
                         }
-                        levelDictionary[Directions.Right][q, (j % 8)] = Tile.Convert(int.Parse(tilesInLine[q]));
+                        levelDictionary[Direction.Right][q, (j % 8)] = Tile.Convert(int.Parse(tilesInLine[q]));
 
                         Debug.Log(7 - (j % 8) + " : " + q);
                     }
